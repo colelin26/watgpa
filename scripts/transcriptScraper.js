@@ -16,7 +16,7 @@ const REGEXES = {
 async function readPDF(filePath) {
     try {
         const txt = await extract(filePath);
-        return txt[0];
+        return txt.join('\n');
     } catch (err) {
         throw new Error(err);
     }
@@ -37,6 +37,7 @@ function string_to_course_JSON(str) {
 exports.PDF_to_array_of_JSON = async function PDF_to_array_of_JSON(filePath) {
     try {
         const txt = await readPDF(filePath);
+        console.log(txt);
         const courses_string = txt.match(REGEXES.courses_global);
         const courses_array_of_JSON = [];
         for (let i = 0; i < courses_string.length; i++) {
