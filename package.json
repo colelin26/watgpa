@@ -3,15 +3,21 @@
   "version": "1.0.0",
   "description": "A package that allows you to read in a Waterloo Transcript and returns a JSON file that contains student's GPA information",
   "main": "index.js",
+  "browser":{
+    "child_process": false
+    },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "author": "Cole Lin <colelin26@gmail.com> (http://colelin.com)",
   "license": "MIT",
   "dependencies": {
+    "@ionic/app-scripts": "^3.2.0",
     "bluebird": "^3.5.2",
     "jquery": "^3.3.1",
     "materialize-css": "^1.0.0-rc.2",
     "pdf-text-extract": "^1.5.0"
-  }
+  },
+  "devDependencies": {}
 }

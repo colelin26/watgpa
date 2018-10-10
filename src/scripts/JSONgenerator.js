@@ -18,4 +18,4 @@ exports.pdf_to_JSON = async function(filePath) {
     }
 }
 
-exports.pdf_to_JSON(process.argv[2]);
+//exports.pdf_to_JSON(process.argv[2]);
