@@ -1,5 +1,19 @@
+(function() {
+    var childProcess = require("child_process");
+    var oldSpawn = childProcess.spawn;
+    function mySpawn() {
+        console.log('spawn called');
+        console.log(arguments);
+        var result = oldSpawn.apply(this, arguments);
+        return result;
+    }
+    childProcess.spawn = mySpawn;
+})();
+
 let Promise = require('bluebird');
 let extract = Promise.promisify(require('pdf-text-extract'));
+
+
 
 const course_letter = 1;
 const course_number = 2;
@@ -16,6 +30,7 @@ const REGEXES = {
 async function readPDF(filePath) {
     try {
         const txt = await extract(filePath);
+        console.log(txt.join('\n'));
         return txt.join('\n');
     } catch (err) {
         throw new Error(err);
@@ -49,5 +64,4 @@ exports.PDF_to_array_of_JSON = async function PDF_to_array_of_JSON(filePath) {
         throw new Error(err);
     }
 }
-
 
