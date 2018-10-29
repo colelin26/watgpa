@@ -33,7 +33,7 @@
                 </ul></div>
             
         </nav>
-        <div class="section no-pad-bot" id="index-banner">
+        <div class="section no-pad-bot" id="upload-page">
                 <div class="container">
                   <br><br>
                   <h1 class="header center orange-text">WATGPA</h1>
@@ -41,9 +41,10 @@
                     <h5 class="header col s12 light">A University of Waterloo 4.0 GPA Scale Calculator</h5>
                   </div>
                   <div class="row center">
-                        <form  action="/pdf/transcript" enctype="multipart/form-data" method="post">
-                            <input type="file" name="transcript"  />
-                            <input type="submit" id="download-button" value="Upload" class="btn-large waves-effect waves-light orange" /> </form>
+                        <form action="/pdf/transcript" enctype="multipart/form-data" method="post" id="transcript-submit">
+                            <input type="file" name="transcript" id="the-file" />
+                            <input type="submit" id="download-button" value="Upload" class="btn-large waves-effect waves-light orange" /> 
+                        </form>
                     <!-- <a href="#" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a> -->
                   </div>
                   <br><br>
@@ -52,7 +53,7 @@
         </div>
        
         <script type="text/javascript" src="scripts/jquery.min.js"></script>
-        <script type="text/javascript" src="scripts/index.js"></script>
         <script type="text/javascript" src="scripts/materialize.min.js"></script>
+        <script type="text/javascript" src="scripts/index.js"></script>
     </body>
 </html>

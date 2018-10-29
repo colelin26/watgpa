@@ -16,10 +16,8 @@ app.get('/', function (req, res) {
     res.sendFile('index.html');
   });
 
-app.post('/pdf/transcript', upload.single('transcript'), function (req, res, next) {
-     console.log(req);
-    let pdfPath = `${req.file.destination}${req.file.filename}`;
-    console.log(pdfPath);
-    let pdfJSON = jsonGene.pdf_to_JSON(pdfPath);
-    console.log(pdfJSON);
+app.post('/pdf/transcript', upload.single('transcript'), async function (req, res, next) {
+     let pdfPath = `${req.file.destination}${req.file.filename}`;
+     let pdfJSON = await jsonGene.pdf_to_JSON(pdfPath);
+     res.json(pdfJSON);
 })

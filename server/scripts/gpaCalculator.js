@@ -1,4 +1,5 @@
-exports.percentage_to_four_point_zero = function percentage_to_four_point_zero(course) {
+// return the fpo correspondence of a course
+exports.course_fpo = function course_fpo(course) {
     let percentage_grade = course.percentage_grade;
     if (percentage_grade >= 90) return 4.00;
     else if (percentage_grade >= 85) return 3.90;
@@ -15,13 +16,15 @@ exports.percentage_to_four_point_zero = function percentage_to_four_point_zero(c
     else return 0.00;
 }
 
-exports.add_four_point_zero = function add_four_point_zero(courses) {
+// add fpo for courses without fpo 
+exports.courses_add_fpo = function courses_add_fpo(courses) {
     for (let i = 0; i < courses.length; i++) {
-        courses[i].four_point_zero_scale = exports.percentage_to_four_point_zero(courses[i]);
+        courses[i].four_point_zero_scale = exports.course_fpo(courses[i]);
     }
 }
 
-exports.four_point_zero_scale_average = function four_point_zero_scale_average(courses) {
+// calculate avg_fpo for given courses
+exports.courses_avg_fpo = function courses_avg_fpo(courses) {
     let sum = 0;
     for (let i = 0; i < courses.length; i++) {
         sum += courses[i].four_point_zero_scale;
