@@ -11,8 +11,8 @@ const earned_credit = 7;
 const percentage_grade = 8;
 
 const REGEXES = {
-    courses: /(\w+)\s+(\d+\w?)\s+(((\w|-)+\s+)+)(\d.\d\d)\s+(\d.\d\d)\s+(\d+)/,
-    courses_global: /(\w+)\s+(\d+\w?)\s+(((\w|-)+\s+)+)(\d.\d\d)\s+(\d.\d\d)\s+(\d+)/g,
+    courses: /(\w+)\s+(\d+\w?)\s+(((\w|-)+\s+)+)(\d.\d\d)\s+(\d.\d\d)\s+(\d+|\w+)/,
+    courses_global: /Level:\s+([0-9][A-Z])\s+Load:\s((\w|-)+)\s+Form Of Study: ([\s\S]+)\s+Course[\s\S]+Grade\s((\w+)\s+(\d+\w?)\s+(((\w|-)+\s+)+)(\d.\d\d)\s+(\d.\d\d)\s+(\d+|\w+))+/g,
 }
 
 async function readPDF(filePath) {
@@ -27,6 +27,7 @@ async function readPDF(filePath) {
 
 function string_to_course_JSON(str) {
     const str_match_result = str.match(REGEXES.courses);
+
     return {
         course_letter: str_match_result[course_letter],
         course_number: str_match_result[course_number],
