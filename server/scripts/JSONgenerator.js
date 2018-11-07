@@ -1,8 +1,3 @@
-let gpacal = require('./gpaCalculator');
-let pdfscraper = require('./transcriptScraper');
-let Promise = require('bluebird');
-let extract = Promise.promisify(require('pdf-text-extract'));
-
 const REGEXES = {
     // term fetches groups in a course
     term: /Level:\s+([0-9][A-Z])\s+Load:\s((\w|-)+)\s+Form Of Study: ([\w]{9}|[\w|-]{5}\s[\w]{8})/,
@@ -41,22 +36,33 @@ const SELECTORS = {
     }
 }
 
+const TONUMBER = {
+    courseFinished: [6, 7, 8],
+    courseUnfinished: [3],
+}
+
 class Block {
     constructor(arr){
         this.arr = arr;
     };
     // Given data and lookUpTable, produce an object where keys are the same 
     // as the one in the lookUpTable but the values are the corresdence from the data
-    lookUpAndMerge(lookUpTable, data) {
+    lookUpAndMerge(lookUpTable, filterArr, dataGroup) {
         let resultObj = {};
         for (let variable in lookUpTable) {
-            resultObj[variable] = data[lookUpTable[variable]];
+            resultObj[variable] = dataGroup[lookUpTable[variable]].trim();
+            if (filterArr != undefined) {
+                if (filterArr.includes(lookUpTable[variable])) {
+                    console.log(resultObj);
+                    if (!isNaN(+resultObj[variable])) resultObj[variable] = +resultObj[variable];
+                }
+            }
         }
         return resultObj;
     };
     InfoGenerator(Str) {
         const Groups = Str.match(this.REGEX);
-        return this.lookUpAndMerge(this.InfoSelector, Groups);
+        return this.lookUpAndMerge(this.InfoSelector, this.toNumber, Groups);
     };
 
 }
@@ -74,6 +80,7 @@ class courseFinishedBlock extends Block{
         super(arr);
         this.REGEX = REGEXES.course_finished;
         this.InfoSelector = SELECTORS.courseFinishedInfoSelector;
+        this.toNumber = TONUMBER.courseFinished;
     }
 }
 
@@ -82,6 +89,7 @@ class courseUnfinishedBlock extends Block{
         super(arr);
         this.REGEX = REGEXES.course_unfinished;
         this.InfoSelector = SELECTORS.courseUnfinishedInfoSelector;
+        this.toNumber = TONUMBER.courseUnfinished;
     }
 }
 
@@ -114,15 +122,14 @@ function combineBlocks(coursesBlock, ...otherBlocks) {
     return coursesArr;
 }
 
-async function test() {
-    let str = await readPDF("/Users/cole/Dropbox/Coding/JavaScript/JS\ PlayGround/andrew.pdf");
-
-    let result_courses_block_global = str.match(REGEXES.courses_block_global);
-    let result_terms = new termBlock(str.match(REGEXES.terms));
-
-
-    let courses_arr = combineBlocks(result_courses_block_global, result_terms);
-    console.log(courses_arr);
+exports.txt_to_JSON = async function txt_to_JSON(txt) {
+    try {
+        let result_courses_block_global = txt.match(REGEXES.courses_block_global);
+        let result_terms = new termBlock(txt.match(REGEXES.terms));
+        let courses_arr = combineBlocks(result_courses_block_global, result_terms);
+        return courses_arr;
+    } catch(err) {
+        throw new Error(err);
+    }
 }
 
-test();
