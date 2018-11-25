@@ -21,7 +21,9 @@ $( document ).ready(function() {
         	contentType: false,                  
 			processData:false,    
 			success: (res) => {
-                GPAdata=res;
+				GPAdata=res;
+				$("#gpa_result").text(GPAdata.fpo_avg);
+				$("#gpa_result").removeAttr("hidden");
                 console.log(GPAdata);
               },
 			error : function(e) {

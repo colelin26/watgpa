@@ -3,15 +3,10 @@ const extract = Promise.promisify(require('pdf-text-extract'));
 const gpacal = require('./gpaCalculator');
 const jsonGene = require('./JSONgenerator');
 
-// const REGEXES = {
-//     courses: /(\w+)\s+(\d+\w?)\s+(((\w|-)+\s+)+)(\d.\d\d)\s+(\d.\d\d)\s+(\d+|\w+)/,
-//     courses_global: /Level:\s+([0-9][A-Z])\s+Load:\s((\w|-)+)\s+Form Of Study: ([\s\S]+)\s+Course[\s\S]+Grade\s((\w+)\s+(\d+\w?)\s+(((\w|-)+\s+)+)(\d.\d\d)\s+(\d.\d\d)\s+(\d+|\w+))+/g,
-// }
-
 async function readPDF(filePath) {
     try {
         const txt = await extract(filePath);
-        console.log(txt.join('\n'));
+        // console.log(txt.join('\n'));
         return txt.join('\n');
     } catch (err) {
         throw new Error(err);
@@ -30,5 +25,5 @@ async function scrape_transcript(filePath) {
     return transcriptJSON;
 }
 
-console.log(scrape_transcript('/Users/cole/Dropbox/Coding/JavaScript/NodeProject/pdf_to_gpa/public/files/SSR_TSRPT.pdf'));
 
+exports.scrape_transcript = scrape_transcript;
