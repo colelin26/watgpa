@@ -22,9 +22,8 @@ $( document ).ready(function() {
 			processData:false,    
 			success: (res) => {
 				GPAdata=res;
-				$("#gpa_result").text(GPAdata.fpo_avg);
+				$("#gpa_result").text(`Your GPA in 4.0 scale is ${GPAdata.fpo_avg}`);
 				$("#gpa_result").removeAttr("hidden");
-                console.log(GPAdata);
               },
 			error : function(e) {
 				alert("Error!")
