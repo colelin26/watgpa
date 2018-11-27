@@ -1,6 +1,6 @@
 # WAT_GPA
 
-An web application that calculates your GPA in 4.0 scale for your University of Waterloo transcript
+An web application that scrapes your transcript data and calculates your GPA in 4.0 scale for your University of Waterloo transcript
 
 ## Setup Steps
 
