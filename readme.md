@@ -1,3 +1,7 @@
+# WATranscript
+
+To see WATranscript, please visit https://github.com/colelin26/WATranscript
+
 # WAT_GPA
 
 An web application that scrapes your transcript data and calculates your GPA in 4.0 scale for your University of Waterloo transcript
